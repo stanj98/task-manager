@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Container, Button, Row, Col, Form, InputGroup, ListGroup } from 'react-bootstrap';
 import ThemeProvider from 'react-bootstrap/ThemeProvider';
+import './App.css';
 
 
 function App() {
@@ -115,61 +116,75 @@ function App() {
         </Row>
       </Container>
       <Container className='mt-3'>
-        <Row className="justify-content-md-center">
+        {/* Split row into 2 cols -> left side handles task list and right side displays matrix */}
+        <Row>
+          {/* Tasks come below */}
           <Col md="7">
             <Form method='POST' id='task-list' onSubmit={handleSubmit}>
-              <Form.Group>
-                {list.map((task) => (
-                  <ListGroup>
-                      <ListGroup.Item key = {task.id} className="d-flex justify-content-between align-items-center">
-                        {task.todo}
-                        <div>
-                          <Form.Check inline type='checkbox' checked={task.important} onChange={(event) => updateImportant(event, task.id)} label="Important" className="mr-3" />
-                          <Form.Check inline type='checkbox' checked={task.urgent} onChange={(event) => updateUrgent(event, task.id)} label="Urgent" className="mr-3" />
-                          <Button className="ml-1" onClick={() => editToDo(task.id)} variant="warning">&times;</Button>
-                          <Button className="ml-2" onClick={() => deleteToDo(task.id)} variant="danger">&times;</Button>
-                        </div>
-                      </ListGroup.Item>
-                  </ListGroup>
-                ))}
-                <br />
-                {error && <p>{error}</p>}
-                {list.length > 0 ? <Button size="lg" variant="primary" type="submit" value={input} onChange = {(e) => setInput(e.target.value)}>Prioritize</Button> : null}
-              </Form.Group>
+              <Row className="justify-content-md-center">
+                <Col md="12">
+                  <div style={{ height: '400px', overflow: 'auto' }}>
+                    {/* <Form method='POST' id='task-list' onSubmit={handleSubmit}> */}
+                      <Form.Group>
+                        {list.map((task) => (
+                          <ListGroup>
+                              <ListGroup.Item key = {task.id} className="d-flex justify-content-between align-items-center">
+                                {task.todo}
+                                <div>
+                                  <Form.Check inline type='checkbox' checked={task.important} onChange={(event) => updateImportant(event, task.id)} label="Important" className="mr-3" />
+                                  <Form.Check inline type='checkbox' checked={task.urgent} onChange={(event) => updateUrgent(event, task.id)} label="Urgent" className="mr-3" />
+                                  <Button className="mr-2" onClick={() => editToDo(task.id)} variant="warning">&#128393;</Button>
+                                  <Button style={{marginLeft: '2px'}} onClick={() => deleteToDo(task.id)} variant="danger">&times;</Button>
+                                </div>
+                              </ListGroup.Item>
+                          </ListGroup>
+                        ))}
+                        {/* {error && <p>{error}</p>}
+                        {list.length > 0 ? <Button size="md" variant="primary" type="submit" value={input} onChange = {(e) => setInput(e.target.value)}>Prioritize</Button> : null} */}
+                      </Form.Group>
+                    {/* </Form> */}
+                    {/* create a clean way to display tasks, make UI */}
+                    {/* <p>Do them</p>
+                    <ul>
+                    {doTasks.map((task) => (
+                          <li key = {task.id}>
+                            {task.todo}
+                          </li>
+                        ))}
+                    </ul>
+                    <p>Schedule them</p>
+                    <ul>
+                    {scheduleTasks.map((task) => (
+                          <li key = {task.id}>
+                            {task.todo}
+                          </li>
+                        ))}
+                    </ul>
+                    <p>Delegate them</p>
+                    <ul>
+                    {delegateTasks.map((task) => (
+                          <li key = {task.id}>
+                            {task.todo}
+                          </li>
+                        ))}
+                    </ul>
+                    <p>Delete them</p>
+                    <ul>
+                    {deleteTasks.map((task) => (
+                          <li key = {task.id}>
+                            {task.todo}
+                          </li>
+                        ))}
+                    </ul> */}
+                  </div>
+                </Col>
+              </Row>
+              {error && <p>{error}</p>}
+              {list.length > 0 ? <Button size="md" variant="primary" type="submit" value={input} onChange = {(e) => setInput(e.target.value)}>Prioritize</Button> : null}
             </Form>
-            {/* create a clean way to display tasks, make UI */}
-            <p>Do them</p>
-            <ul>
-            {doTasks.map((task) => (
-                  <li key = {task.id}>
-                    {task.todo}
-                  </li>
-                ))}
-            </ul>
-            <p>Schedule them</p>
-            <ul>
-            {scheduleTasks.map((task) => (
-                  <li key = {task.id}>
-                    {task.todo}
-                  </li>
-                ))}
-            </ul>
-            <p>Delegate them</p>
-            <ul>
-            {delegateTasks.map((task) => (
-                  <li key = {task.id}>
-                    {task.todo}
-                  </li>
-                ))}
-            </ul>
-            <p>Delete them</p>
-            <ul>
-            {deleteTasks.map((task) => (
-                  <li key = {task.id}>
-                    {task.todo}
-                  </li>
-                ))}
-            </ul>
+          </Col>
+          {/* Matrix comes below */}
+          <Col>
           </Col>
         </Row>
       </Container>
