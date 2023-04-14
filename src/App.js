@@ -1,4 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
+import { Container, Button, Row, Col, Form, InputGroup, ListGroup } from 'react-bootstrap';
+import ThemeProvider from 'react-bootstrap/ThemeProvider';
+
 
 function App() {
 
@@ -85,63 +88,92 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>Focalist</h1>
-      <p>Priotize your tasks instantly</p>
-      <input type='text' value={input} onChange = {(e) => setInput(e.target.value)} required />
-      <button onClick={() => addToDo(input)}>Add</button>
-      <ul>
-        <form method='POST' id='task-list' onSubmit={handleSubmit}>
-          {list.map((task) => (
-            <li key = {task.id}>
-              {task.todo}
-              <label>Important</label>
-              <input type='checkbox' checked={task.important} onChange={(event) => updateImportant(event, task.id)} />
-              <label>Urgent</label>
-              <input type='checkbox' checked={task.urgent} onChange={(event) => updateUrgent(event, task.id)} />
-              <button onClick={() => editToDo(task.id)}>Edit</button>
-              <button onClick={() => deleteToDo(task.id)}>Delete</button>
-            </li>
-          ))}
-          {error && <p>{error}</p>}
-          {list.length > 0 ? <input type="submit" placeholder="Prioritize" /> : null}
-        </form>
-      </ul>
-      {/* create a clean way to display tasks, make UI */}
-      <p>Do them</p>
-      <ul>
-      {doTasks.map((task) => (
-            <li key = {task.id}>
-              {task.todo}
-            </li>
-          ))}
-      </ul>
-      <p>Schedule them</p>
-      <ul>
-      {scheduleTasks.map((task) => (
-            <li key = {task.id}>
-              {task.todo}
-            </li>
-          ))}
-      </ul>
-      <p>Delegate them</p>
-      <ul>
-      {delegateTasks.map((task) => (
-            <li key = {task.id}>
-              {task.todo}
-            </li>
-          ))}
-      </ul>
-      <p>Delete them</p>
-      <ul>
-      {deleteTasks.map((task) => (
-            <li key = {task.id}>
-              {task.todo}
-            </li>
-          ))}
-      </ul>
-
-    </div>
+    <ThemeProvider
+      breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+      minBreakpoint="xxs"
+    >
+      <Container className="mt-3 mx-auto" fluid>
+        <Row className="justify-content-md-center">
+          <Col md="auto">
+            <h1>Task Manager</h1>
+          </Col>
+        </Row>
+      </Container>
+      <Container className="mt-3" fluid>
+        <Row className="justify-content-md-center">
+          <Col md="auto">
+            <Form>
+              <Form.Group>
+                <Form.Label>Enter your task:</Form.Label>
+                <InputGroup>
+                  <Form.Control size="lg" type="text" value={input} onChange = {(e) => setInput(e.target.value)} placeholder="Clean room" />
+                  <Button onClick={() => addToDo(input)} variant="success">Add</Button>
+                </InputGroup>
+              </Form.Group>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+      <Container className='mt-3'>
+        <Row className="justify-content-md-center">
+          <Col md="7">
+            <Form method='POST' id='task-list' onSubmit={handleSubmit}>
+              <Form.Group>
+                {list.map((task) => (
+                  <ListGroup>
+                      <ListGroup.Item key = {task.id} className="d-flex justify-content-between align-items-center">
+                        {task.todo}
+                        <div>
+                          <Form.Check inline type='checkbox' checked={task.important} onChange={(event) => updateImportant(event, task.id)} label="Important" className="mr-3" />
+                          <Form.Check inline type='checkbox' checked={task.urgent} onChange={(event) => updateUrgent(event, task.id)} label="Urgent" className="mr-3" />
+                          <Button className="ml-1" onClick={() => editToDo(task.id)} variant="warning">&times;</Button>
+                          <Button className="ml-2" onClick={() => deleteToDo(task.id)} variant="danger">&times;</Button>
+                        </div>
+                      </ListGroup.Item>
+                  </ListGroup>
+                ))}
+                <br />
+                {error && <p>{error}</p>}
+                {list.length > 0 ? <Button size="lg" variant="primary" type="submit" value={input} onChange = {(e) => setInput(e.target.value)}>Prioritize</Button> : null}
+              </Form.Group>
+            </Form>
+            {/* create a clean way to display tasks, make UI */}
+            <p>Do them</p>
+            <ul>
+            {doTasks.map((task) => (
+                  <li key = {task.id}>
+                    {task.todo}
+                  </li>
+                ))}
+            </ul>
+            <p>Schedule them</p>
+            <ul>
+            {scheduleTasks.map((task) => (
+                  <li key = {task.id}>
+                    {task.todo}
+                  </li>
+                ))}
+            </ul>
+            <p>Delegate them</p>
+            <ul>
+            {delegateTasks.map((task) => (
+                  <li key = {task.id}>
+                    {task.todo}
+                  </li>
+                ))}
+            </ul>
+            <p>Delete them</p>
+            <ul>
+            {deleteTasks.map((task) => (
+                  <li key = {task.id}>
+                    {task.todo}
+                  </li>
+                ))}
+            </ul>
+          </Col>
+        </Row>
+      </Container>
+    </ThemeProvider>
   )
 }
 
