@@ -124,7 +124,6 @@ function App() {
               <Row className="justify-content-md-center">
                 <Col md="12">
                   <div style={{ height: '400px', overflow: 'auto' }}>
-                    {/* <Form method='POST' id='task-list' onSubmit={handleSubmit}> */}
                       <Form.Group>
                         {list.map((task) => (
                           <ListGroup>
@@ -139,43 +138,7 @@ function App() {
                               </ListGroup.Item>
                           </ListGroup>
                         ))}
-                        {/* {error && <p>{error}</p>}
-                        {list.length > 0 ? <Button size="md" variant="primary" type="submit" value={input} onChange = {(e) => setInput(e.target.value)}>Prioritize</Button> : null} */}
                       </Form.Group>
-                    {/* </Form> */}
-                    {/* create a clean way to display tasks, make UI */}
-                    {/* <p>Do them</p>
-                    <ul>
-                    {doTasks.map((task) => (
-                          <li key = {task.id}>
-                            {task.todo}
-                          </li>
-                        ))}
-                    </ul>
-                    <p>Schedule them</p>
-                    <ul>
-                    {scheduleTasks.map((task) => (
-                          <li key = {task.id}>
-                            {task.todo}
-                          </li>
-                        ))}
-                    </ul>
-                    <p>Delegate them</p>
-                    <ul>
-                    {delegateTasks.map((task) => (
-                          <li key = {task.id}>
-                            {task.todo}
-                          </li>
-                        ))}
-                    </ul>
-                    <p>Delete them</p>
-                    <ul>
-                    {deleteTasks.map((task) => (
-                          <li key = {task.id}>
-                            {task.todo}
-                          </li>
-                        ))}
-                    </ul> */}
                   </div>
                 </Col>
               </Row>
@@ -185,6 +148,68 @@ function App() {
           </Col>
           {/* Matrix comes below */}
           <Col>
+            <div style={{ height: '400px', overflow: 'auto' }}>
+              <Row>
+                <Col xs={6}>
+                  {doTasks.length ? (
+                    <div>
+                      <h3>Do them</h3>
+                      {doTasks.map((task) => (
+                        <ListGroup>
+                          <ListGroup.Item>
+                            {task.todo}
+                          </ListGroup.Item>
+                        </ListGroup>
+                      ))}
+                    </div>
+                  ) : null}
+                </Col>
+                <Col xs={6}>
+                  {scheduleTasks.length ? (
+                    <div>
+                      <h3>Schedule them</h3>
+                      {scheduleTasks.map((task) => (
+                        <ListGroup>
+                          <ListGroup.Item>
+                            {task.todo}
+                          </ListGroup.Item>
+                        </ListGroup>
+                      ))}
+                    </div>
+                  ) : null}
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={6}>
+                  {delegateTasks.length ? (
+                    <div>
+                      <h3>Delegate them</h3>
+                      {delegateTasks.map((task) => (
+                        <ListGroup>
+                          <ListGroup.Item>
+                            {task.todo}
+                          </ListGroup.Item>
+                        </ListGroup>
+                      ))}
+                    </div>
+                  ) : null}
+                </Col>
+                <Col xs={6}>
+                  {deleteTasks.length ? (
+                    <div>
+                      <h3>Delete them</h3>
+                      {deleteTasks.map((task) => (
+                        <ListGroup>
+                          <ListGroup.Item>
+                            {task.todo}
+                          </ListGroup.Item>
+                        </ListGroup>
+                      ))}
+                    </div>
+                  ) : null}
+                </Col>
+              </Row>
+            </div>
           </Col>
         </Row>
       </Container>
