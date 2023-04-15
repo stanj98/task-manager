@@ -1,5 +1,9 @@
-import React, {useState} from 'react';
-import { Container, Button, Row, Col, Form, InputGroup, ListGroup } from 'react-bootstrap';
+import React, {useState, useRef} from 'react';
+import { 
+  Container, Button, Row, 
+  Col, Form, InputGroup, 
+  ListGroup, Overlay, Tooltip
+} from 'react-bootstrap';
 import ThemeProvider from 'react-bootstrap/ThemeProvider';
 import './App.css';
 
@@ -8,20 +12,23 @@ function App() {
 
   const [list, setList] = useState([]);
   const [input, setInput] = useState("");
-  const [error, setError] = useState("");
   const [doTasks, setDoTasks] = useState([]);
   const [scheduleTasks, setScheduleTasks] = useState([]);
   const [delegateTasks, setDelegateTasks] = useState([]);
   const [deleteTasks, setDeleteTasks] = useState([]);
+  const [show, setShow] = useState(false);
+  const target = useRef(null);
 
   const addToDo = (todo) => {
 
     if (todo.trim() === '') {
-      setError('Name is required');
+      setShow(!show);
+      setTimeout(() => {
+        setShow(show);
+      }, 1000);
       return;
     }
-    //reset the error to empty string if test case passed
-    setError("");
+
     const newToDo = {
       id: Math.random(),
       todo: todo,
@@ -108,7 +115,7 @@ function App() {
                 <Form.Label>Enter your task:</Form.Label>
                 <InputGroup>
                   <Form.Control size="lg" type="text" value={input} onChange = {(e) => setInput(e.target.value)} placeholder="Clean room" />
-                  <Button onClick={() => addToDo(input)} variant="success">Add</Button>
+                  <Button ref={target} onClick={() => addToDo(input)} variant="success">Add</Button>
                 </InputGroup>
               </Form.Group>
             </Form>
@@ -116,7 +123,7 @@ function App() {
         </Row>
       </Container>
       <Container className='mt-3'>
-        {/* Split row into 2 cols -> left side handles task list and right side displays matrix */}
+        {/* Split row into 2 cols -> left side handles task list and right side displays tasks */}
         <Row>
           {/* Tasks come below */}
           <Col md="7">
@@ -142,7 +149,13 @@ function App() {
                   </div>
                 </Col>
               </Row>
-              {error && <p>{error}</p>}
+              <Overlay target={target.current} show={show} placement="right">
+                {(props) => (
+                  <Tooltip id="overlay-example" {...props}>
+                    Task is required
+                  </Tooltip>
+                )}
+              </Overlay>
               {list.length > 0 ? <Button size="md" variant="primary" type="submit" value={input} onChange = {(e) => setInput(e.target.value)}>Prioritize</Button> : null}
             </Form>
           </Col>
