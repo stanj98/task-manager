@@ -1,2 +1,2 @@
 # task-manager
-A priority list tool that's based on Eisenhower Matrix
+A priority list generator that's based on the Eisenhower Matrix
