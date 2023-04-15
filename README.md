@@ -2,7 +2,7 @@
 
 ## Description
 
-A task managing/priority tool that's based on the Eisenhower matrix
+A task managing/priority tool that's based on the Eisenhower matrix. View here: https://stanj98.github.io/task-manager/
 
 ## Getting Started
 
